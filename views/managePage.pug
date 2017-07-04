@@ -1,0 +1,23 @@
+extends layout
+
+mixin genlist(item)
+  tr
+    td.
+      #{item.restaurant_name}
+    td.
+      #{item.address}
+
+block content
+  div.container
+    h2 #{title}
+    table(class="table table-bordered")
+      thead
+        tr
+          th
+            | restaurant name
+          th 
+            | address
+      tbody
+        for item in res_list
+          +genlist(item)
+    

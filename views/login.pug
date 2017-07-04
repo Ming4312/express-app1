@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    div(class="container")
+        div(class="row")
+            div(class="col-xs-12")
+                h2= title
+                if error
+                    div(class="alert alert-danger")
+                        strong 
+                            | #{error}
+                    
+                form(action="/users/getSignInInfo", method="post")
+                    div(class="form-group")
+                        label(for="email")
+                            | Email address:
+                        input(type="email", class="form-control", id="email", name="email")
+                    div(class="form-group")
+                        label(for="pwd")
+                            | Password:
+                        input(type="password", class="form-control", id="pwd", name="pwd")
+                    button(type="submit" class="btn btn-default")
+                        | Submit

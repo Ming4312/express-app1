@@ -1,0 +1,54 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css')
+    script(type="text/javascript",src="https://code.jquery.com/jquery-3.2.1.min.js")
+    script(type="text/javascript", src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+    script(type="text/script", src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")
+    script(type="text/script", src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js")
+  body
+    div.container
+      div.row
+        img(src="../images/md1.jpg", width="100%", height="100px")
+    div.container
+      div.row
+        nav(class="navbar navbar-inverse")
+          div.container-fluid
+            div.navbar-header
+              button.navbar-toggle(type="button", data-toggle="collapse", data-target="#myNavBar", style="float:left")
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+                
+              a.navbar-brand(href="/")
+                | MyWebsite
+              
+              ul(class="nav navbar-nav navbar-right", style="float:right;padding-right:20px", id="nav-right")
+                if isLogin
+                  li
+                    a(href="/users/logout")
+                      span(class="glyphicon glyphicon-log-out")
+                else
+                  li
+                    a(href="/users/register")
+                      span(class="glyphicon glyphicon-user")
+                  li
+                    a(href='/users/login')
+                      span(class="glyphicon glyphicon-log-in")
+                  
+            div(class="collapse navbar-collapse", id="myNavBar")
+              ul(class="nav navbar-nav")
+                li
+                  a(href="#")
+                    | Random
+                li
+                  a(href="/manage")
+                    | Manage
+              
+    block content
