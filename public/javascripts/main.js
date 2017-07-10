@@ -27,8 +27,8 @@ $(document).ready(function(){
     });
     $('#btnRandom').click(function(){
         var option = $('#randomOptions').find("option:selected").text();
-        $.get('/testapi/'+option,function(data,status){
-            $('#randomResult').html('<h2>'+data.restaurant_name+'</h2>'+'<p>'+data.address+'</p>');
+        $.get('/getRandomItem/'+option,function(data,status){
+            $('#randomResult').html('<h2>'+data.restaurant_name+'</h2>'+'<p>地址:'+data.address+'</p>');
            
         })
     })
