@@ -36,6 +36,16 @@ block content
                       | address: 
                   td
                     input(type="text", id="address", name="address", class="form-control")
+                tr
+                  td
+                    label
+                      | status: 
+                  td
+                    select.selectpicker(id="status",name="status")
+                      option 
+                        | enable
+                      option
+                        | disable
           div.modal-footer
             button(type="button",class="btn", onclick="getElementById('adding_form').submit()") Submit
             button(type="button", class="btn" data-dismiss="modal") Close

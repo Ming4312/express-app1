@@ -26,7 +26,7 @@ var listKeyName = [];
 
 
 router.use('/',function(req,res,next){
-    if(req.session.authenticated)
+   if(req.session.authenticated)
         next()
     else
         res.redirect('/users/login')
@@ -57,7 +57,7 @@ router.get('/getResList/:targetList', function(req, res, next) {
     var targetList = req.params.targetList;
     
 
-    getList('restaurant_list/'+targetList).then(function(){
+    getListItems('restaurant_list/'+targetList).then(function(){
         var l = Object.keys(res_list).map(function(k) { return res_list[k] });
         res.send({data: l});
     })
@@ -68,33 +68,30 @@ router.get('/getResList/:targetList', function(req, res, next) {
 router.post('/createNewRecord/:targetList',function(req,res,next){
     var rname = req.body.name;
     var raddress = req.body.address;
+    var status = req.body.status;
     var targetList = req.params.targetList;
-    writeRestaurantData(rname,raddress,targetList);
+    writeRestaurantData(rname,raddress,status,targetList);
     res.redirect('back');
 })
-router.post('/createNewList',function(req,res,next){
+/*router.post('/createNewList',function(req,res,next){
     var listname = req.body.listname
-    writeRestaurantList(listname)
+    
     res.redirect('back')
     
-})
+})*/
 
-function writeRestaurantList(listname){
-    var newListRef = firebaseDB.ref('restaurant_list/'+listname).push()
-    newListRef.set({
-        
-    })
-}
 
-function writeRestaurantData(rname,raddress,list){
+
+function writeRestaurantData(rname,raddress,status,list){
     var newRecordRef = firebaseDB.ref('restaurant_list/'+list).push();
     newRecordRef.set({
         restaurant_name: rname,
-        address: raddress
+        address: raddress,
+        status: status
     });
 }
 
-function getList(api){
+function getListItems(api){
     return firebaseDB.ref(api).once('value').then(function(snapshot){
         console.log(snapshot.key)
         res_list = snapshot.val(); 

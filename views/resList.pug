@@ -4,13 +4,12 @@ block content
     div.container
         div.row
             div.col-xs-12
-                table
+                ul
                     for item in listoption
-                        tr
-                            td
-                                a(href='/manage/'+item)
-                                    | #{item}
-        div.row
+                        li
+                            a(href='/manage/'+item)
+                                | #{item}
+        //div.row
             div.col-xs-12
                 button(type="button", class="btn btn-success", data-toggle="modal", data-target="#newListModal") New
                 include newListModals

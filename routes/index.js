@@ -47,7 +47,7 @@ router.get('/random',function(req,res,next){
 })
 router.get('/getRandomItem/:list',function(req, res, next) {
     var list = req.params.list;
-    return firebaseDB.ref('restaurant_list/'+list).once('value').then(function(snapshot){
+    return firebaseDB.ref('restaurant_list/'+list).orderByChild('status').startAt('enable').once('value').then(function(snapshot){
    
        var js = [];
        snapshot.forEach(function(childSnapshot){
