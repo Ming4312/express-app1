@@ -1,23 +1,50 @@
 extends layout
 
-mixin genlist(item)
-  tr
-    td.
-      #{item.restaurant_name}
-    td.
-      #{item.address}
-
 block content
   div.container
-    h2 #{title}
-    table(class="table table-bordered")
+    span(hidden, id="target")= currentList
+    
+    h2= currentList
+    //button group for firebase realtimedb
+    div.btn-group
+      button(type="button", class="btn btn-info", data-toggle="modal", data-target="#Editor-Add") Add
+      button(type="button", class="btn btn-info", data-toggle="modal", data-target="#Editor-Edit") Edit
+      button(type="button", class="btn btn-info", id="deleteButton") Delete
+    //end button group
+    
+    //bootstrap model
+    div(class="modal fade", id="Editor-Add", role="dialog")
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button(type="button", class="close", data-dismiss="modal") &times;
+            h4.modal-title
+              | Modal Header
+          div.modal-body
+            form(action='/manage/createNewRecord/'+currentList, method="POST", id="adding_form")
+               
+              table
+                tr
+                  td
+                    label
+                      | restaurant name: 
+                  td
+                    input(type="text", id="name", name="name", class="form-control")
+                tr
+                  td
+                    label
+                      | address: 
+                  td
+                    input(type="text", id="address", name="address", class="form-control")
+          div.modal-footer
+            button(type="button",class="btn", onclick="getElementById('adding_form').submit()") Submit
+            button(type="button", class="btn" data-dismiss="modal") Close
+    
+    table(class="table table-bordered", id="example")
       thead
         tr
           th
             | restaurant name
           th 
             | address
-      tbody
-        for item in res_list
-          +genlist(item)
     

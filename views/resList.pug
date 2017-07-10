@@ -4,9 +4,16 @@ block content
     div.container
         div.row
             div.col-xs-12
-                ul
-                for item in Object.keys(res_list)
-                    li
-                        a(href='/manage/'+item)
-                            | #{item}
+                table
+                    for item in listoption
+                        tr
+                            td
+                                a(href='/manage/'+item)
+                                    | #{item}
+        div.row
+            div.col-xs-12
+                button(type="button", class="btn btn-success", data-toggle="modal", data-target="#newListModal") New
+                include newListModals
+       
                 
+        

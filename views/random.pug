@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    div.container
+        div.row
+            div.col-xs-4
+                select.selectpicker(data-width="fit", id="randomOptions")
+                    for item in listoption
+                        option
+                            | #{item}
+            div.col-xs-8
+                button(type="button", class="btn btn-default btn-block", id="btnRandom") Random
+                
+        div.row
+            div.col-xs-12
+                div(id="randomResult")
+                

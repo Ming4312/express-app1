@@ -8,10 +8,21 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     link(rel='stylesheet', href='https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/buttons/1.3.1/css/buttons.bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/select/1.2.2/css/select.bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css')
+    
+    script(type="text/javascript", src="https://code.jquery.com/jquery-1.12.4.js")
     script(type="text/javascript",src="https://code.jquery.com/jquery-3.2.1.min.js")
     script(type="text/javascript", src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
-    script(type="text/script", src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")
-    script(type="text/script", src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js")
+    script(type="text/javascript", src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")
+    script(type="text/javascript", src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js")
+    script(type="text/javascript", src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js")
+    script(type="text/javascript", src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.bootstrap.min.js")
+    script(type="text/javascript", src="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js")
+    script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js')
+    script(type="text/javascript", src="/javascripts/main.js")
+    
   body
     div.container
       div.row
@@ -35,9 +46,9 @@ html
                     a(href="/users/logout")
                       span(class="glyphicon glyphicon-log-out")
                 else
-                  li
-                    a(href="/users/register")
-                      span(class="glyphicon glyphicon-user")
+                  //li
+                    //a(href="/users/register")
+                      //span(class="glyphicon glyphicon-user")
                   li
                     a(href='/users/login')
                       span(class="glyphicon glyphicon-log-in")
@@ -45,7 +56,7 @@ html
             div(class="collapse navbar-collapse", id="myNavBar")
               ul(class="nav navbar-nav")
                 li
-                  a(href="#")
+                  a(href="/random")
                     | Random
                 li
                   a(href="/manage")
