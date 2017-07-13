@@ -26,12 +26,12 @@ var listKeyName = [];
 
 
 router.use('/',function(req,res,next){
-   /*if(req.session.authenticated)
+   if(req.session.authenticated)
         next()
     else
         res.redirect('/users/login')
-    */
-    next()
+    
+    //next()
 })
 
 
