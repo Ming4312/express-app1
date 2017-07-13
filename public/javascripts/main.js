@@ -22,7 +22,10 @@ $(document).ready(function(){
     })
     $('#deleteButton').click( function () {
         var ids = table.row('.selected').data()
-        console.log(ids.address)
+        if(typeof ids != 'undefined')
+            $.post('/manage/deleteItem',{name: ids.restaurant_name, address: ids.address, targetList: $('#target').text()},function(data){
+                location.reload();
+            })
         //table.row('.selected').remove().draw( false );
     });
     $('#btnRandom').click(function(){

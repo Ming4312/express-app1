@@ -24,11 +24,7 @@ router.use(function(req,res,next){
 })
 
 router.use('/',function(req,res,next){
-    /*if(req.session.authenticated)
-        res.locals.isLogin = true
-    else
-        res.locals.isLogin = false
-    */
+
     getResList(res).then(function(){
         next();
     })

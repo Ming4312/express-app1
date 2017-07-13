@@ -26,12 +26,12 @@ var listKeyName = [];
 
 
 router.use('/',function(req,res,next){
-   if(req.session.authenticated)
+   /*if(req.session.authenticated)
         next()
     else
         res.redirect('/users/login')
-    
-    //next()
+    */
+    next()
 })
 
 
@@ -73,14 +73,57 @@ router.post('/createNewRecord/:targetList',function(req,res,next){
     writeRestaurantData(rname,raddress,status,targetList);
     res.redirect('back');
 })
-/*router.post('/createNewList',function(req,res,next){
-    var listname = req.body.listname
-    
-    res.redirect('back')
-    
-})*/
 
+router.post('/deleteItem',function(req,res,next){
+    var targetList = req.body.targetList
+    var name = req.body.name;
+    var address = req.body.address;
+    var api = 'restaurant_list/'+targetList;
+    firebaseDB.ref(api).orderByChild('restaurant_name').equalTo(name).once('value').then(function(snapshot){
+        //console.log(targetList)
+        var childKey;
+        if(snapshot.numChildren() > 1)
+            snapshot.forEach(function(childSnapshot) {
+                if(childSnapshot.child('address').val() == address)
+                    childKey = childSnapshot.key;
+            });
+        else
+            childKey = Object.keys(snapshot.val())[0]
+        
+        if(typeof childKey != 'undefined'){
+            api += "/"+childKey;
+            firebaseDB.ref(api).remove().then(function(){
+                res.send("OK");
+            });
+        }
+        
+    })
+    
+})
 
+router.get('/testapi/:list/:name',function(req, res, next) {
+    return firebaseDB.ref('restaurant_list/'+req.params.list).orderByChild('restaurant_name').equalTo(req.params.name).once('value').then(function(snapshot){
+        var childKey;
+        var cS;
+        snapshot.forEach(function(childSnapshot) {
+            childKey = childSnapshot.key;
+            cS = childSnapshot
+            console.log(childKey)
+            return;
+        });
+        
+        res.send(cS); 
+        
+    })
+   /* var newContent = {
+        address: "123",
+        restaurant_name: "123",
+        status: 'disable',
+        id: 2
+    }
+   firebaseDB.ref('restaurant_list/中菜/-Kofixb3N0UUS-nvwiw8').update(newContent);
+   res.send("su");*/
+})
 
 function writeRestaurantData(rname,raddress,status,list){
     var newRecordRef = firebaseDB.ref('restaurant_list/'+list).push();
@@ -93,19 +136,11 @@ function writeRestaurantData(rname,raddress,status,list){
 
 function getListItems(api){
     return firebaseDB.ref(api).once('value').then(function(snapshot){
-        console.log(snapshot.key)
         res_list = snapshot.val(); 
-        
     })
 }
-function getResList(){
-    return firebaseDB.ref('restaurant_list/').once('value').then(function(snapshot){
-        var keys = []
-        snapshot.forEach(function(childSnapshot){
-            var key = childSnapshot.key;
-            keys.push(key);
-        })
-        listKeyName = keys;
-    })
+
+function deleteItem(api){
+    firebaseDB.ref(api).remove();
 }
 module.exports = router;
