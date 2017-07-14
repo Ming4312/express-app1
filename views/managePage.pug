@@ -7,13 +7,13 @@ block content
     h2= currentList
     //button group for firebase realtimedb
     div.btn-group
-      button(type="button", class="btn btn-info", data-toggle="modal", data-target="#Editor-Add") Add
-      button(type="button", class="btn btn-info", data-toggle="modal", data-target="#Editor-Edit") Edit
+      button(type="button", class="btn btn-info", data-toggle="modal", data-target="#Editor", id="addButton") Add
+      button(type="button", class="btn btn-info", data-toggle="modal", data-target="#Editor", id="updateButton") Edit
       button(type="button", class="btn btn-info", id="deleteButton") Delete
     //end button group
     
     //bootstrap model
-    div(class="modal fade", id="Editor-Add", role="dialog")
+    div(class="modal fade", id="Editor", role="dialog")
       div.modal-dialog
         div.modal-content
           div.modal-header
@@ -21,8 +21,7 @@ block content
             h4.modal-title
               | Modal Header
           div.modal-body
-            form(action='/manage/createNewRecord/'+currentList, method="POST", id="adding_form")
-               
+            form(action='', method="POST", id="adding_form")
               table
                 tr
                   td
@@ -54,7 +53,11 @@ block content
       thead
         tr
           th
+            | key
+          th
             | restaurant name
           th 
             | address
+          th
+            | status
     

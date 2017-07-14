@@ -15,10 +15,11 @@ var config = {
 //firebase.initializeApp(config);
 var firebaseDB = firebase.database();
 //var firebaseRef = firebaseDB.ref('restaurant_list/list1');
-var res_list = {};
+var res_list = [];
 
 var listKeyName = [];
 
+var baseURL = 'restaurant_list/';
 
 //end global variable
 
@@ -57,9 +58,10 @@ router.get('/getResList/:targetList', function(req, res, next) {
     var targetList = req.params.targetList;
     
 
-    getListItems('restaurant_list/'+targetList).then(function(){
-        var l = Object.keys(res_list).map(function(k) { return res_list[k] });
-        res.send({data: l});
+    getListItems(baseURL+targetList).then(function(){
+        //var l = Object.keys(res_list).map(function(k) { return res_list[k] });
+        
+        res.send({data: res_list});
     })
     
    
@@ -74,59 +76,35 @@ router.post('/createNewRecord/:targetList',function(req,res,next){
     res.redirect('back');
 })
 
+router.post('/updateRecord/:targetList',function(req, res, next) {
+    var targetList = req.params.targetList;
+    var rname = req.body.name;
+    var raddress = req.body.address;
+    var status = req.body.status; 
+    var key = req.body.pkey;
+    console.log(key)
+    var data={
+        restaurant_name: rname, 
+        address: raddress,
+        status: status
+    }
+    firebaseDB.ref(baseURL+'/'+targetList + '/' + key).update(data)
+    res.redirect('back')
+})
+
 router.post('/deleteItem',function(req,res,next){
     var targetList = req.body.targetList
     var name = req.body.name;
     var address = req.body.address;
-    var api = 'restaurant_list/'+targetList;
-    firebaseDB.ref(api).orderByChild('restaurant_name').equalTo(name).once('value').then(function(snapshot){
-        //console.log(targetList)
-        var childKey;
-        if(snapshot.numChildren() > 1)
-            snapshot.forEach(function(childSnapshot) {
-                if(childSnapshot.child('address').val() == address)
-                    childKey = childSnapshot.key;
-            });
-        else
-            childKey = Object.keys(snapshot.val())[0]
-        
-        if(typeof childKey != 'undefined'){
-            api += "/"+childKey;
-            firebaseDB.ref(api).remove().then(function(){
-                res.send("OK");
-            });
-        }
-        
-    })
-    
-})
-
-router.get('/testapi/:list/:name',function(req, res, next) {
-    return firebaseDB.ref('restaurant_list/'+req.params.list).orderByChild('restaurant_name').equalTo(req.params.name).once('value').then(function(snapshot){
-        var childKey;
-        var cS;
-        snapshot.forEach(function(childSnapshot) {
-            childKey = childSnapshot.key;
-            cS = childSnapshot
-            console.log(childKey)
-            return;
-        });
-        
-        res.send(cS); 
-        
-    })
-   /* var newContent = {
-        address: "123",
-        restaurant_name: "123",
-        status: 'disable',
-        id: 2
-    }
-   firebaseDB.ref('restaurant_list/中菜/-Kofixb3N0UUS-nvwiw8').update(newContent);
-   res.send("su");*/
+    var api = baseURL+targetList + "/" + req.body.key;
+    firebaseDB.ref(api).remove().then(function(){
+        res.send("OK");
+    });
+ 
 })
 
 function writeRestaurantData(rname,raddress,status,list){
-    var newRecordRef = firebaseDB.ref('restaurant_list/'+list).push();
+    var newRecordRef = firebaseDB.ref(baseURL+list).push();
     newRecordRef.set({
         restaurant_name: rname,
         address: raddress,
@@ -136,7 +114,17 @@ function writeRestaurantData(rname,raddress,status,list){
 
 function getListItems(api){
     return firebaseDB.ref(api).once('value').then(function(snapshot){
-        res_list = snapshot.val(); 
+        res_list = [];
+        snapshot.forEach(function(childSnapshot){
+        
+            res_list.push({
+                key: childSnapshot.key,
+                restaurant_name: childSnapshot.child('restaurant_name').val(),
+                status: childSnapshot.child('status').val(),
+                address: childSnapshot.child('address').val()
+            })
+        })
+        
     })
 }
 
