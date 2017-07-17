@@ -7,9 +7,37 @@ div(class="modal fade", id="newListModal", role="dialog")
                     | Create New List
             div.modal-body
                 form(action="/manage/createNewList", method="POST", id="newListForm")
-                    label
-                        | List Name:
-                    input(type="text", name="listname", id="listname")
+                    table 
+                        tr
+                            td
+                                label
+                                    | List Name:
+                            td
+                                input(type="text", name="listname", id="listname", class="form-control")
+                        tr
+                            td
+                                label
+                                    | initial item:
+                            td
+                                input(type="text", name="restaurant_name", id="restaurant_name", class="form-control")
+                        tr
+                            td
+                                label
+                                    | address:
+                            td
+                                input(type="text", name="address", id="address", class="form-control")
+                        tr
+                            td
+                                label
+                                    | status:
+                            td
+                                select.selectpicker(id="status",name="status")
+                                  option 
+                                    | enable
+                                  option
+                                    | disable
+                    
+                    
             div.modal-footer
                 button(type="button",class="btn btn-default",onclick="getElementById('newListForm').submit()") Submit
                 button(type="button",class="btn btn-default",data-dismiss="modal") Close

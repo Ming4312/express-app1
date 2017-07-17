@@ -66,6 +66,18 @@ router.get('/getResList/:targetList', function(req, res, next) {
     
    
 })
+router.post('/createNewList',function(req, res, next) {
+    var rname = req.body.restaurant_name;
+    var raddress = req.body.address;
+    var status = req.body.status;
+    var listname = req.body.listname;
+    firebaseDB.ref(baseURL+"/"+listname).push().set({
+        restaurant_name: rname,
+        address: raddress,
+        status: status
+    });
+    res.redirect('back');
+})
 
 router.post('/createNewRecord/:targetList',function(req,res,next){
     var rname = req.body.name;
